@@ -48,5 +48,23 @@ public class PostService {
 
         postRepository.save(post);
     }
+    
+    public int getPostCount() 
+    {
+        return (int) postRepository.count();
+    }
+    
+    public void updatePost(Integer id, String title, String content, String category) 
+    {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCategory(category);
+
+        postRepository.save(post);
+    }
+
 
 }

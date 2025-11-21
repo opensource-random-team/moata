@@ -5,7 +5,7 @@
 		<head>
 		    <meta charset="UTF-8">
 		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		    <title>Moata-글쓰기</title>
+		    <title>Moata 수정하기</title>
 		    <script src="https://cdn.tailwindcss.com"></script>
 		    <link rel="stylesheet" href="styles.css">
 		</head>
@@ -13,27 +13,27 @@
 		    <div class="container mx-auto px-4 py-8">
 		        <div class="max-w-4xl mx-auto">
 		            <div class="mb-8">
-		                <h1 class="text-4xl font-bold mb-2">글쓰기</h1>
+		                <h1 class="text-4xl font-bold mb-2">수정하기</h1>
 		                <p class="text-xl text-gray-600">커뮤니티에 유용한 정보나 경험을 공유해주세요</p>
 		            </div>
 
-		            <form action="/community_write" method="post" class="bg-white border rounded-lg shadow-xl p-8 space-y-6">
+		            <form th:action="@{'/community_edit/' + ${post.id}}" method="post" class="bg-white border rounded-lg shadow-xl p-8 space-y-6">
 		                <!-- Category -->
 		                <div>
 		                    <label class="text-base font-semibold block mb-2">카테고리</label>
-		                    <select name="category" class="px-3 py-2 border rounded-lg">
-		                        <option>자유</option>
-		                     	<option>팟 구해요</option>
-		                        <option>꿀팁</option>
-		                        <option>질문</option>
-		                        
-		                    </select>
+		                    <select name="category">
+							    <option th:selected="${post.category=='자유'}">자유</option>
+							    <option th:selected="${post.category=='팟 구해요'}">팟 구해요</option>
+							    <option th:selected="${post.category=='꿀팁'}">꿀팁</option>
+							    <option th:selected="${post.category=='질문'}">질문</option>
+							</select>
+
 		                </div>
 
 		                <!-- Title -->
 		                <div>
 		                    <label class="text-base font-semibold block mb-2">제목</label>
-		                    <input type="text" name="title" placeholder="제목을 입력하세요" 
+		                    <input type="text" name="title" th:value="${post.title}" placeholder="제목을 입력하세요" 
 		                           class="w-full text-lg px-3 py-2 border rounded-lg" maxlength="100">
 		                    <div class="text-sm text-gray-500 text-right mt-1">0/100</div>
 		                </div>
@@ -41,27 +41,25 @@
 		                <!-- Content -->
 		                <div>
 		                    <label class="text-base font-semibold block mb-2">내용</label>
-		                    <textarea placeholder="내용을 입력하세요" name="content"
+		                    <textarea placeholder="내용을 입력하세요" name="content"  th:text="${post.content}"
 		                              class="w-full px-3 py-2 border rounded-lg" 
 		                              rows="15" maxlength="5000"></textarea>
 		                    <div class="text-sm text-gray-500 text-right mt-1">0/5000</div>
 		                </div>
 
-		               
-		                
+		                 
 		                <!-- userId -->
 		                <input type="hidden" name="userId" th:value="${userId}">
 		                
 		                <div class="mt-6 flex justify-end">
 				    		<button type="submit"
 				        			class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition">
-				        			등록하기
+				        			수정하기
 				    		</button>
 						</div>
 		            </form>
 		           
 		            
-		   
 
 		            <!-- Tips -->
 		            <div class="mt-6 bg-white border rounded-lg shadow-lg p-6">

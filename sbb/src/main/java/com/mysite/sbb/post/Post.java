@@ -47,4 +47,8 @@ public class Post{
         this.createdAt = LocalDateTime.now();
     }
     
+    @Column(length = 50)
+    private LocalDateTime modiftDate;
+    
+    
 }

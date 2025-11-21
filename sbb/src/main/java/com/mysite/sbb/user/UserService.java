@@ -87,5 +87,11 @@ public class UserService {
 	    return user.getUsername();
     		
     }
+    
+   
+    public int getUserCount() 
+    {
+        return (int) userRepository.count();
+    }
 	
 }

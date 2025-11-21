@@ -30,12 +30,47 @@
 		            </form>
 
 		            <!-- Category Tabs -->
-		            <div class="flex flex-wrap gap-2">
-		                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">전체 <span class="ml-1">156</span></button>
-		                <button class="px-4 py-2 border rounded-lg text-sm">꿀팁 <span class="ml-1">42</span></button>
-		                <button class="px-4 py-2 border rounded-lg text-sm">질문 <span class="ml-1">38</span></button>
-		                <button class="px-4 py-2 border rounded-lg text-sm">정기경로 <span class="ml-1">28</span></button>
-		            </div>
+		           
+				   <a th:href="@{/community(category='전체')}"
+					   class="px-4 py-2 rounded-lg text-sm inline-block"
+					   th:classappend="${selectedCategory == null || selectedCategory == '전체'} 
+					                    ? ' bg-blue-600 text-white'
+					                    : ' border'">
+					    전체 <span class="ml-1">[[${postCount}]]</span>
+					</a>
+					
+					<a th:href="@{/community(category='자유')}"
+					   class="px-4 py-2 rounded-lg text-sm inline-block"
+					   th:classappend="${selectedCategory == '자유'} 
+					                    ? ' bg-blue-600 text-white'
+					                    : ' border'">
+					    자유
+					</a>
+					
+					<a th:href="@{/community(category='팟 구해요')}"
+					   class="px-4 py-2 rounded-lg text-sm inline-block"
+					   th:classappend="${selectedCategory == '팟 구해요'} 
+					                    ? ' bg-blue-600 text-white'
+					                    : ' border'">
+					    팟 구해요
+					</a>
+					
+					<a th:href="@{/community(category='꿀팁')}"
+					   class="px-4 py-2 rounded-lg text-sm inline-block"
+					   th:classappend="${selectedCategory == '꿀팁'} 
+					                    ? ' bg-blue-600 text-white'
+					                    : ' border'">
+					    꿀팁
+					</a>
+					<a th:href="@{/community(category='질문')}"
+					   class="px-4 py-2 rounded-lg text-sm inline-block"
+					   th:classappend="${selectedCategory == '질문'} 
+					                    ? ' bg-blue-600 text-white'
+					                    : ' border'">
+					    질문
+					</a>
+									   
+
 		        </div>
 
 		        <div class="grid lg:grid-cols-4 gap-8">
@@ -106,16 +141,18 @@
 		                    <div class="space-y-3">
 		                        <div class="flex justify-between">
 		                            <span class="text-sm">전체 회원</span>
-		                            <span class="font-semibold">12,847명</span>
+		                            <span class="font-semibold">[[${userCount}]]</span>
 		                        </div>
 		                        <div class="flex justify-between">
-		                            <span class="text-sm">오늘 게시글</span>
-		                            <span class="font-semibold">23개</span>
+		                            <span class="text-sm">모든 게시글</span>
+		                            <span class="font-semibold">[[${postCount}]]</span>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 		    </div>
+		    
+		    <br>
 
 		    <!-- JavaScript 추가 및 검색 기능 구현 -->
 		    <script src="app.js"></script>

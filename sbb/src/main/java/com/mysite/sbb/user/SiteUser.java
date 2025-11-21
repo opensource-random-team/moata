@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,14 @@ public class SiteUser{
 	
 	@Column(length=20)
 	private String permission;
+	
+	@Column(length = 50)
+    private LocalDateTime createdAt;
+    
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 	
 	// @OneToMany 구현해야 함.
 	// private 
