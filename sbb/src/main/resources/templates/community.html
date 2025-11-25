@@ -80,6 +80,8 @@
 				<div th:if="${#lists.isEmpty(postList)}" class="text-center text-gray-500 mb-4">
 			    검색 결과가 없습니다.
 			</div>
+			
+			
 
 			    <!-- DB에서 받아온 postList 반복 -->
 			    <div th:each="post : ${postList}">
@@ -108,8 +110,14 @@
 			                        </div>
 			
 			                        <!-- 제목 -->
-			                        <h3 class="text-lg font-semibold mb-2" 
-			                            th:text="${post.title}">게시글 제목</h3>
+			                        <h3 class="text-lg font-semibold mb-2">
+									    <span th:if="${post.off == 1}" class="text-blue-600 font-bold">
+									        [모집 종료]
+									    </span>
+									    <span th:text="${post.title}"></span>
+									</h3>
+
+
 			
 			                        <!-- 내용 일부 -->
 			                        <p class="text-gray-600 mb-3 line-clamp-2" 

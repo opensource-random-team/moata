@@ -17,7 +17,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public void writePost(String title, String content, String category, String userId) 
+    public Post writePost(String title, String content, String category, String userId) 
     {
     	
     		//userId로 SiteUser 조회
@@ -30,7 +30,8 @@ public class PostService {
         post.setUser(user);
         //post.setViewCnt(0);
 
-        postRepository.save(post);
+        return postRepository.save(post);
+        
     }
     
     public List<Post> searchPosts(String key) 
@@ -65,6 +66,20 @@ public class PostService {
 
         postRepository.save(post);
     }
+    
+    public void deletePost(Integer id, String userId) {
+
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        // 본인 글 아닌데 삭제 요청 → 막기
+        if (!post.getUser().getUserId().equals(userId)) {
+            throw new RuntimeException("삭제 권한이 없습니다.");
+        }
+
+        postRepository.delete(post);
+    }
+
 
 
 }

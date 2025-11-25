@@ -94,9 +94,9 @@ public class CommunityController
 	                           @RequestParam("category") String category,
 	                           @RequestParam("userId") String userId) {
 
-	    postService.writePost(title, content, category,userId);
+		 Post post = postService.writePost(title, content, category, userId);
 
-	    return "redirect:/community";
+		 return "redirect:/community_detail/" + post.getId();
 	}
 	
 	@PostMapping("/community_search")
@@ -151,6 +151,21 @@ public class CommunityController
 	    postRepository.save(post);
 
 	    return "redirect:/community_detail/" + id;
+	}
+
+	@GetMapping("/community_delete/{id}")
+	public String deletePost(
+	        @PathVariable Integer id) {
+
+	    String userId = userService.getCurrentUserId();
+
+	    if (userId == null) {
+	        return "redirect:/login?needLogin";
+	    }
+
+	    postService.deletePost(id, userId);
+
+	    return "redirect:/community?deleted";
 	}
 
 	
