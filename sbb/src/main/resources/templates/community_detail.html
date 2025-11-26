@@ -93,7 +93,15 @@
 		                        
 		                    </div>
 		                    
-		                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">❤️ 24</button>
+		                   <form th:action="@{'/recommend/' + ${post.id}}" method="post">
+						    <button 
+						        class="px-4 py-2 rounded-lg border transition"
+						        th:classappend="${isRecommended} ? ' bg-blue-600 text-white' : ' bg-white text-blue-600'"
+						    >
+						        ❤️ <span th:text="${recommendCount}"></span>
+						    </button>
+						</form>
+
 		                </div>
 		               
 								                

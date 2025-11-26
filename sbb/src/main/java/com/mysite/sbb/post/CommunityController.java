@@ -10,6 +10,7 @@ import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 import com.mysite.sbb.comment.CommentService;
 import com.mysite.sbb.comment.Comment;
+import com.mysite.sbb.recommendation.RecommendationService;
 
 import lombok.RequiredArgsConstructor;
 import java.util.List;
@@ -25,6 +26,7 @@ public class CommunityController
 	private final PostService postService;
 	private final UserService userService;
 	private final CommentService commentService;
+	private final RecommendationService recommendationService;
 	
 	@GetMapping("/community")
 	public String communityList(@RequestParam(value="category", required=false) String category,
@@ -82,6 +84,16 @@ public class CommunityController
 	    // 🔥 댓글 리스트 추가 (여기가 핵심)
 	    List<Comment> commentList = commentService.getComments(id);
 	    model.addAttribute("comments", commentList);
+	    
+	    SiteUser currentUser = userService.getCurrentUser(); // 유ㅓㅈ 전체 따로 또 받아오기,, 더티코드 ㅈㅅ ㅋㅋ;;
+	    
+	    boolean isRecommended = recommendationService.isRecommended(post, currentUser);
+	    int recommendCount = recommendationService.count(post);
+
+
+	    model.addAttribute("isRecommended", isRecommended);
+	    model.addAttribute("recommendCount", recommendCount);
+
 
 	    // 상세 페이지로 이동
 	    return "community_detail";
@@ -191,7 +203,23 @@ public class CommunityController
 	    return "redirect:/community?deleted";
 	}
 
-	
+	@PostMapping("/recommend/{id}")
+	public String recommend(@PathVariable Integer id) {
+
+	    String userId = userService.getCurrentUserId();
+
+	    if (userId == null) {
+	        return "redirect:/login?needLogin";
+	    }
+
+	    Post post = postService.getPost(id);
+	    SiteUser user = userService.getCurrentUser();
+
+	    recommendationService.recommend(post, user);
+
+	    return "redirect:/community_detail/" + id;
+	}
+
 	
 
 	
