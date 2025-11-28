@@ -1,8 +1,10 @@
 package com.mysite.sbb.post;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -86,6 +88,20 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
     }
 
+    @Transactional
+    public void deleteUserByUsername(String username) {
+    	Optional<SiteUser> userOpt = userRepository.findByUserId(username);
+
+    	if (userOpt.isPresent()) {
+    	    SiteUser user = userOpt.get(); // 실제 엔티티 꺼내기
+    	    postRepository.deleteAllByUser(user);
+    	    userRepository.delete(user);
+    	} else {
+    	    // 사용자 없으면 예외 처리하거나 그냥 리턴
+    	    throw new RuntimeException("User not found: " + username);
+    	}
+
+    }
 
 
 }

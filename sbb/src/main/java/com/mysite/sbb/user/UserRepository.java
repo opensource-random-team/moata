@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<SiteUser,Integer>
 	boolean existsByUserId(String userId);
 	
 	boolean existsByPhoneNumber(String phoneNumber);
+	
+	void deleteByUserId(String userId);
 }

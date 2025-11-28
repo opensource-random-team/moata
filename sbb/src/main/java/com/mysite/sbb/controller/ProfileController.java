@@ -42,11 +42,11 @@ public class ProfileController {
 
 	    SiteUser user = userService.getCurrentUser();
 	    List<Post> myPosts = postRepository.findByUserOrderByCreatedAtDesc(user);
-	    List<Recommendation> likedList = recommendationRepository.findByUser(user);
+	    List<Recommendation> likedPosts = recommendationRepository.findByUser(user);
 
 	    model.addAttribute("user", user);
 	    model.addAttribute("myPosts", myPosts);
-	    model.addAttribute("likedList", likedList);
+	    model.addAttribute("likedPosts", likedPosts);
 
 	    return "profile";
 	}

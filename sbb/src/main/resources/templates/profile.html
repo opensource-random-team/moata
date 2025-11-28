@@ -16,71 +16,95 @@
 		        <div class="bg-white border rounded-lg shadow-xl p-8 mb-8">
 		            <div class="flex items-start gap-6">
 		                <div class="relative">
-		                    <div class="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-3xl font-bold text-white">
-		                        김
-		                    </div>
+		                    <div class="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-3xl font-bold text-white"></div>
 		                </div>
 		                <div class="flex-1">
 		                    <div class="flex items-center gap-3 mb-2">
-		                        <h1 class="text-3xl font-bold">김민수</h1>
-		                        <span class="border text-sm px-2 py-1 rounded">VIP 회원</span>
+		                        <h1 class="text-3xl font-bold" th:text="${user.userId}">이름</h1>
 		                    </div>
-		                    <p class="text-gray-600 mb-4">안전하고 즐거운 택시 공유를 추구하는 직장인입니다.</p>
 		                    <div class="flex flex-wrap gap-4 text-sm text-gray-600">
-		                        <span>📞 010-1234-5678</span>
-		                        <span>📧 minsu.kim@email.com</span>
-		                        <span>📅 가입일: 2024.03.15</span>
+		                        <span>📞 <span th:text="${user.phoneNumber}"></span></span>
+								<span>📅<span th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd')}"></span>
 		                    </div>
 		                </div>
+						<a href="/profile/edit">
 		                <button class="px-4 py-2 border rounded-lg">편집</button>
-		            </div>
+		            	</a>
+					</div>
 		        </div>
 
-		        <!-- Stats -->
-		        <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mb-8">
-		            <div class="bg-white border rounded-lg p-6 text-center">
-		                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-		                    <span class="text-2xl">🚗</span>
-		                </div>
-		                <div class="text-2xl font-bold text-blue-600">127</div>
-		                <div class="text-sm text-gray-600">총 이용 횟수</div>
-		            </div>
-		            <div class="bg-white border rounded-lg p-6 text-center">
-		                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-		                    <span class="text-2xl">👥</span>
-		                </div>
-		                <div class="text-2xl font-bold text-blue-600">89</div>
-		                <div class="text-sm text-gray-600">만난 사람들</div>
-		            </div>
-		        </div>
+				<!-- Tabs -->
+				<div class="mb-6">
+				    <div class="flex gap-2 border-b">
+				        <button class="tab-btn px-4 py-2 border-b-2 border-blue-600 font-medium" data-tab="activity">최근 활동</button>
+				        <button class="tab-btn px-4 py-2 text-gray-600" data-tab="liked">좋아요한 글</button>
+				    </div>
+				</div>
 
-		        <!-- Tabs -->
-		        <div class="mb-6">
-		            <div class="flex gap-2 border-b">
-		                <button class="px-4 py-2 border-b-2 border-blue-600 font-medium">최근 활동</button>
-		                <button class="px-4 py-2 text-gray-600">즐겨찾기</button>
-		                <button class="px-4 py-2 text-gray-600">설정</button>
-		            </div>
-		        </div>
+				<!-- Tab Content: 최근 활동 -->
+				<div id="tab-activity" class="tab-content">
+				    <div class="bg-white border rounded-lg shadow-lg p-6">
+				        <h2 class="text-xl font-semibold mb-6">최근 작성한 글</h2>
 
-		        <!-- Recent Activity -->
-		        <div class="bg-white border rounded-lg shadow-lg p-6">
-		            <h2 class="text-xl font-semibold mb-6">최근 이용 내역</h2>
-		            <div class="space-y-4">
-		                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg">
-		                    <div class="flex items-center gap-4">
-		                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-		                            📍
-		                        </div>
-		                        <div>
-		                            <div class="font-medium">강남역 → 여의도역</div>
-		                            <div class="text-sm text-gray-600">2025.01.15</div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
+				        <!-- 게시글 없을 때 -->
+				        <div th:if="${#lists.isEmpty(myPosts)}" class="text-gray-600">
+				            작성한 게시글이 없습니다.
+				        </div>
+
+				        <!-- 게시글 목록 -->
+				        <div class="space-y-4" th:each="post : ${myPosts}">
+				            <a th:href="@{/community_detail/{id}(id=${post.id})}"
+				               class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg hover:bg-blue-100 transition">
+
+				                <div class="flex items-center gap-4">
+				                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+				                        📍
+				                    </div>
+
+				                    <div>
+				                        <div class="font-medium" th:text="${post.title}">게시글 제목</div>
+				                        <div class="text-sm text-gray-600"
+				                             th:text="${#temporals.format(post.createdAt, 'yyyy.MM.dd')}">
+				                        </div>
+				                    </div>
+				                </div>
+				            </a>
+				        </div>
+
+				    </div>
+				</div>
+
+
+				<!-- Tab Content: 좋아요한 글 -->
+				<div id="tab-liked" class="tab-content hidden">
+				    <div class="bg-white border rounded-lg shadow-lg p-6">
+				        <h2 class="text-xl font-semibold mb-6">좋아요한 글 목록</h2>
+
+				        <!-- 좋아요한 글 없을 때 -->
+				        <div th:if="${#lists.isEmpty(likedPosts)}" class="text-gray-600">
+				            좋아요한 게시글이 없습니다.
+				        </div>
+
+				        <!-- 좋아요한 글 반복 -->
+						<div class="space-y-4" th:each="rec : ${likedPosts}">
+						    <a th:href="@{/community_detail/{id}(id=${rec.post.id})}"
+						       class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-pink-50 rounded-lg hover:bg-pink-100 transition">
+
+						        <div>
+						            <div class="font-medium" th:text="${rec.post.title}">게시글 제목</div>
+						            <div class="text-sm text-gray-600"
+						                 th:text="${#temporals.format(rec.post.createdAt, 'yyyy.MM.dd')}"></div>
+						        </div>
+						    </a>
+						</div>
+
+
+				    </div>
+				</div>
+
+
 		    </div>
+			<script src="/js/profile.js"></script>
 		</body>
     </p>
 </th:block>

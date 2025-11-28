@@ -18,11 +18,5 @@ public class MainController
     public String chatyPage()
     {
     		return "chat";
-    }
-    @GetMapping("/profile")
-    public String profilePage()
-    {
-    		return "profile";
-    }
-    
+    }    
 }
