@@ -25,11 +25,6 @@ public class ChatController {
 	
 	private final UserService userService;
 	
-	private final UserService userService;
-	
-	@Autowired
-    private UserService userService;
-	
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 
