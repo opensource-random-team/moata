@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.Transient;
 
 
 @Getter
@@ -33,6 +34,37 @@ public class SiteUser{
 	
 	@Column(length = 50)
     private LocalDateTime createdAt;
+	
+	@Column(precision=10)
+	private Double latitude;
+
+	@Column(precision=10)
+	private Double longitude;
+	
+	@Column(length=20)
+	private String departure;    // 출발지
+	
+	@Column(length=20)
+    private String destination;  // 도착지
+	
+	@Transient
+    private Double distance; // DB 컬럼 아님, 계산용
+     
+	// getter/setter
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public String getUsername() { return userId; }
+    public void setUsername(String username) { this.userId = username; }
+
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public Double getDistance() { return distance; }
+    public void setDistance(Double distance) { this.distance = distance; }
     
     @PrePersist
     public void onCreate() {

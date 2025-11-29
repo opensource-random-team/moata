@@ -1,246 +1,195 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <th:block layout:fragment="content">
-    <p>
-		<head>
-		    <meta charset="UTF-8">
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e93d960060fff7cf23e2b43dfcc0e2&libraries=services"></script>
-		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		    <title>Moata-매칭</title>
-		    <script src="https://cdn.tailwindcss.com"></script>
-		    <link rel="stylesheet" href="/css/global.css">
-		</head>
-		<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-		    <!-- Background decorations -->
-		    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-		        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"></div>
-		        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl"></div>
-		    </div>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e93d960060fff7cf23e2b43dfcc0e2&libraries=services"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Moata-매칭</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="/css/global.css">
+    </head>
+    <body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div class="fixed inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl"></div>
+        </div>
 
-		    <div class="container mx-auto px-4 py-8 relative z-10">
-		        <div class="max-w-4xl mx-auto">
-		            <!-- Search Form -->
-		            <div class="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm rounded-lg p-6">
-		                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
-		                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-		                        <circle cx="11" cy="11" r="8"></circle>
-		                        <path d="m21 21-4.35-4.35"></path>
-		                    </svg>
-		                    택시 메이트 찾기
-		                </h2>
+        <div class="container mx-auto px-4 py-8 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Search Form -->
+                <div class="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm rounded-lg p-6">
+                    <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        택시 메이트 찾기
+                    </h2>
 
-						<p class="mb-4 text-sm text-gray-600 flex items-center">
-							<svg class="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-							<span id="location-status-text">내 위치 상태: 위치를 찾는 중...</span>
-						</p>
+                    <p class="mb-4 text-sm text-gray-600 flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                        <span id="location-status-text">내 위치 상태: 위치를 찾는 중...</span>
+                    </p>
 
-		                <form id="searchForm" class="space-y-6">
-		                    <div class="grid md:grid-cols-2 gap-4">
-		                        <div>
-		                            <label class="text-sm font-medium block mb-2">출발지</label>
-		                            <input id="departure" type="text" placeholder="출발지를 입력하세요" 
-		                                   class="w-full px-3 py-2 border rounded-lg pl-10">
-		                        </div>
-		                        <div>
-		                            <label class="text-sm font-medium block mb-2">목적지</label>
-		                            <input id="destination" type="text" placeholder="목적지를 입력하세요" 
-		                                   class="w-full px-3 py-2 border rounded-lg pl-10">
-		                        </div>
-		                    </div>
-		                    <div>
-		                        <label class="text-sm font-medium block mb-2">출발 시간</label>
-		                        <input id="departureTime" type="datetime-local" class="px-3 py-2 border rounded-lg pl-10">
-		                    </div>
+                    <form id="searchForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-sm font-medium block mb-2">출발지</label>
+                                <input id="departure" type="text" placeholder="출발지를 입력하세요" class="w-full px-3 py-2 border rounded-lg pl-10">
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium block mb-2">목적지</label>
+                                <input id="destination" type="text" placeholder="목적지를 입력하세요" class="w-full px-3 py-2 border rounded-lg pl-10">
+                            </div>
+                        </div>
 
-		                    <button type="submit" 
-		                            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg rounded-lg">
-		                        택시 메이트 찾기
-		                    </button>
-		                </form>
-		            </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg rounded-lg">
+                            택시 메이트 찾기
+                        </button>
+                    </form>
+                </div>
 
-		            <!-- Results -->
-		            <div id="results" class="hidden space-y-6">
-		                <div class="flex items-center justify-between">
-		                    <h2 class="text-2xl font-bold text-gray-900">매칭 결과 (1명)</h2>
-		                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">실시간 업데이트</span>
-		                </div>
+                <!-- Results -->
+                <div id="results" class="hidden space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-bold text-gray-900">매칭 결과</h2>
+                    </div>
 
-		                <!-- Match Cards -->
-		                <div class="space-y-4">
-		                    <div class="bg-white/80 backdrop-blur-sm rounded-lg p-6 hover:shadow-lg transition">
-		                        <div class="flex items-start justify-between">
-		                            <div class="flex items-start gap-4 flex-1">
-		                                <div class="relative">
-		                                    <div class="w-12 h-12 bg-blue-500 rounded-full"></div>
-		                                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
-		                                </div>
-		                                <div class="flex-1 space-y-3">
-		                                    <div class="flex items-center gap-3">
-		                                        <h3 class="font-semibold text-lg">김민수</h3>
-		                                        <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">95% 매칭</span>
-		                                        <span class="border border-green-600 text-green-600 text-xs px-2 py-1 rounded">온라인</span>
-		                                    </div>
-		                                    <div class="grid md:grid-cols-2 gap-3 text-sm text-gray-600">
-		                                        <div>출발: 강남역 2번 출구</div>
-		                                        <div>도착: 인천공항 1터미널</div>
-		                                        <div>출발시간: 14:30</div>
-		                                        <div>거리: 0.2km</div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="flex flex-col gap-2 ml-4">
-		                                <a href="/chat">
-		                                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
-		                                        채팅하기
-		                                    </button>
-		                                </a>
-		                                <button class="border px-4 py-2 rounded-lg text-sm">매칭 요청</button>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
+                    <!-- Match Cards will be injected here -->
+                    <div id="matchCards" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
 
-		    <!-- JavaScript 추가 및 검색 기능 구현 -->
-		    <script src="/js/app.js"></script>
-		    <script>
+        <script src="/js/app.js"></script>
+        <script>
+            let myCurrentLat = null;
+            let myCurrentLon = null;
 
-				let myCurrentLat = null;
-    			let myCurrentLon = null;
+            function updateLocationStatus(msg) {
+                const statusEl = document.getElementById('location-status-text');
+                if (statusEl) statusEl.textContent = msg;
+            }
 
-				/**
-				 * 카카오 지도 API가 자동으로 로드된 후 현재 위치 정보를 가져오는 함수
-				 */
-				function getMyLocationWithKakao() {
+            function sendLocationToServer(lat, lon) {
+                fetch("/user/location", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `lat=${lat.toFixed(7)}&lon=${lon.toFixed(7)}`
+                }).then(res => res.text())
+                  .then(res => console.log("위치 전송 결과:", res));
+            }
 
-					const statusElement = document.getElementById('location-status-text');
+            function getNearbyUsers(lat, lon, radiusKm = 3) {
+                fetch(`/user/nearby?lat=${lat.toFixed(7)}&lon=${lon.toFixed(7)}&radius=${radiusKm}`)
+                    .then(res => res.json())
+                    .then(users => {
+                        const matchCards = document.getElementById("matchCards");
+                        matchCards.innerHTML = "";
+                        if (!users || users.length === 0) {
+                            updateLocationStatus("근처 사용자를 찾지 못했습니다.");
+                            return;
+                        }
+                        document.getElementById("results").classList.remove('hidden');
+                        users.forEach(u => {
+                            const card = document.createElement("div");
+                            card.className = "bg-white/80 backdrop-blur-sm rounded-lg p-6 hover:shadow-lg transition";
+                            card.innerHTML = `
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-4 flex-1">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 bg-blue-500 rounded-full"></div>
+                                        </div>
+                                        <div class="flex-1 space-y-3">
+                                            <div class="flex items-center gap-3">
+                                                <h3 class="font-semibold text-lg">${u.username}</h3>
+                                            </div>
+                                            <div class="grid md:grid-cols-2 gap-3 text-sm text-gray-600">
+                                                <div>출발: ${u.departure || '-'}</div>
+                                                <div>도착: ${u.destination || '-'}</div>
+                                                <div>거리: ${u.distance.toFixed(3)} km</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2 ml-4">
+                                        <a href="/chat?target=${u.userId}">
+                                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                                                채팅하기
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                            matchCards.appendChild(card);
+                        });
+                    });
+            }
 
-					if (!navigator.geolocation) {
-						TaxiShare.toast.show('이 브라우저는 Geolocation을 지원하지 않습니다.', 'error');
-						console.error("Geolocation API를 지원하지 않는 브라우저입니다.");
-						if (statusElement) {
-							statusElement.textContent = '내 위치 상태: Geolocation을 지원하지 않습니다.';
-						}
-						return;
-					}
+			function initLocation() {
+			    if (!navigator.geolocation) {
+			        updateLocationStatus("Geolocation API를 지원하지 않습니다.");
+			        return;
+			    }
 
-					TaxiShare.toast.show('현재 위치 정보를 가져오는 중...', 'info');
+			    navigator.geolocation.getCurrentPosition(function(position) {
+			        const lat = position.coords.latitude;
+			        const lon = position.coords.longitude;
 
-					// HTML5의 geolocation API를 사용하여 위치 요청
-					navigator.geolocation.getCurrentPosition((position) => {
-						// 성공 콜백 함수 시작
-						const lat = position.coords.latitude; // 위도
-						const lon = position.coords.longitude; // 경도
+			        myCurrentLat = lat;
+			        myCurrentLon = lon;
 
-						myCurrentLat = lat;
-						myCurrentLon = lon;
+			        updateLocationStatus(`위치 확인 완료`);
 
-						const coordinatesText = `(${lat.toFixed(4)}, ${lon.toFixed(4)})`;
-						if (statusElement) {
-							statusElement.textContent = `내 위치 상태: 위치 획득 ${coordinatesText}`;
-						}
+			        // 서버에 현재 위치 저장
+			        sendLocationToServer(lat, lon);
 
-						console.log(`현재 위치: 위도 ${lat}, 경도 ${lon}`);
-						//TaxiShare.toast.show(`위치 좌표 획득 성공: Lat ${lat.toFixed(4)}, Lon ${lon.toFixed(4)}`, 'success');
-						
+			        // 여기서 getNearbyUsers()를 호출하지 않음!!
+			        // -> 검색 버튼 눌러야만 결과 보여줌
 
-					}, (error) => {
-						// 실패 콜백 함수 시작
-						let errorMessage;
-						switch (error.code) {
-							case error.PERMISSION_DENIED:
-								errorMessage = "위치 정보 접근이 차단되었습니다. 브라우저 설정에서 허용해주세요.";
-								break;
-							case error.POSITION_UNAVAILABLE:
-								errorMessage = "위치 정보를 사용할 수 없습니다.";
-								break;
-							case error.TIMEOUT:
-								errorMessage = "위치 정보 요청 시간이 초과되었습니다.";
-								break;
-							default:
-								errorMessage = "위치 정보를 가져오는 데 실패했습니다.";
-						}
-						if (statusElement) {
-							statusElement.textContent = `내 위치 상태: 위치 획득 실패 (${errorMessage.split('.')[0]})`;
-						}
-						
-						TaxiShare.toast.show(`위치 획득 실패: ${errorMessage}`, 'error');
-						console.error("Geolocation Error:", error.message);
-					}, {
-						// 옵션 객체 시작
-						enableHighAccuracy: true,
-						timeout: 15000,
-						maximumAge: 0
-					}); 
-				} 
-					document.addEventListener('DOMContentLoaded', () => {
-						const searchForm = document.getElementById('searchForm');
-						const resultsDiv = document.getElementById('results');
+			    }, function(err) {
+			        updateLocationStatus(`위치 가져오기 실패: ${err.message}`);
+			    }, {
+			        enableHighAccuracy: true,
+			        timeout: 10000,
+			        maximumAge: 0
+			    });
+			}
 
-						setTimeout(getMyLocationWithKakao, 2000);
-						
-						searchForm.addEventListener('submit', (e) => {
-							e.preventDefault();
-							
-							const departure = document.getElementById('departure').value;
-							const destination = document.getElementById('destination').value;
-							const departureTime = document.getElementById('departureTime').value;
-							
-							if (!departure || !destination || !departureTime) 
-							{
-								alert('모든 필드를 입력해주세요.');
-								return;
-							}
+			searchForm.addEventListener('submit', (e) => {
+			    e.preventDefault();
 
-							if (!myCurrentLat || !myCurrentLon) {
-								TaxiShare.toast.show('현재 위치 좌표를 획득 중입니다. 잠시 후 다시 시도해주세요.', 'warning');
-								return;
-							}
+			    const departure = document.getElementById('departure').value;
+			    const destination = document.getElementById('destination').value;
 
-							// 검색 실행
-							TaxiShare.toast.show('매칭을 찾는 중...', 'info');
-							
-							fetch('/api/match', {
-								method: 'POST',
-								headers: {
-									'Content-Type': 'application/json'
-								},
-								body: JSON.stringify({
-									departure: departure,
-									destination: destination,
-									departureTime: departureTime,
-									// 나의 현재 좌표를 서버로 전송 
-									currentLat: myCurrentLat,
-									currentLon: myCurrentLon
-								})
-							})
-							.then(response => response.json())
-							.then(data => {
-								// 4. 서버로부터 받은 실제 매칭 결과를 화면에 표시하는 함수를 호출해야 합니다.
-								// 현재는 하드코딩된 결과를 숨기는 로직만 있습니다.
-								if (data.matches && data.matches.length > 0) {
-									// 실제 데이터로 매칭 결과 HTML을 동적으로 생성/업데이트해야 합니다.
-									resultsDiv.classList.remove('hidden');
-									TaxiShare.toast.show(`${data.matches.length}명의 매칭 결과를 찾았습니다!`, 'success');
-									// 여기서는 실제 데이터로 resultsDiv 내부 HTML을 업데이트하는 추가 코드가 필요합니다.
-								} else {
-									// 매칭 결과가 없을 경우 처리
-									resultsDiv.classList.add('hidden');
-									TaxiShare.toast.show('일치하는 매칭 상대를 찾지 못했습니다.', 'warning');
-								}
-							})
-							.catch(error => {
-								TaxiShare.toast.show('검색 중 오류가 발생했습니다.', 'error');
-								console.error('Fetch Error:', error);
-							});
-							
-						});
-					});
-		    </script>
-		</body>
-    </p>
+			    if (!departure || !destination) {
+			        alert('출발지와 목적지를 입력해주세요.');
+			        return;
+			    }
+
+			    if (!myCurrentLat || !myCurrentLon) {
+			        alert('현재 위치를 확인 중입니다.');
+			        return;
+			    }
+
+			    // 서버에 출발/도착 저장
+			    fetch(`/user/setRoute?lat=${myCurrentLat}&lon=${myCurrentLon}&departure=${encodeURIComponent(departure)}&destination=${encodeURIComponent(destination)}`, {
+			        method: 'POST'
+			    })
+			    .then(res => res.text())
+			    .then(res => {
+			        console.log("출발/도착지 저장 결과:", res);
+
+			        // 저장 후 매칭 사용자 검색
+			        getNearbyUsers(myCurrentLat, myCurrentLon);
+			    });
+			});
+
+			initLocation();
+
+        </script>
+    </body>
 </th:block>
 </html>
