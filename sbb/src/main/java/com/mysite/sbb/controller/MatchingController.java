@@ -33,10 +33,16 @@ public class MatchingController {
 	
 	@GetMapping("/matching")
 	public String matchingPage(Model model) {
+		
+	    String check_user=userService.getCurrentUserId();
+	    if(check_user == null)
+		{
+			return "redirect:/login?needLogin5";
+		}
 
 	    // 현재 로그인 유저
 	    SiteUser currentUser = userService.getCurrentUser();
-
+	    
 	    // 모든 유저 목록
 	    List<SiteUser> userList = userService.getList();
 
