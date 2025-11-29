@@ -101,11 +101,9 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    
-   
     public int getUserCount() 
     {
         return (int) userRepository.count();
     }
-	
+    
 }

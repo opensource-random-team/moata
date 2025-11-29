@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Test</title>
+</head>
+<body>
+    <h1>Matching Test</h1>
+    <button id="sendLocation">현재 위치 전송</button>
+    <p id="status"></p>
+
+    <ul id="nearbyList"></ul>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const nearbyEl = document.getElementById("nearbyList");
+        const radiusKm = 3; // 3km 반경
+
+        document.getElementById("sendLocation").addEventListener("click", function() {
+            if (!navigator.geolocation) {
+                statusEl.innerText = "Geolocation API를 지원하지 않습니다.";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const accuracy = position.coords.accuracy; // meter 단위
+
+                statusEl.innerText = `위치 확인 완료 (정확도 ±${accuracy} m)`;
+
+                // DB에 위치 전송
+                fetch("/user/location", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `lat=${lat.toFixed(7)}&lon=${lon.toFixed(7)}`
+                }).then(res => res.text())
+                  .then(res => console.log("위치 전송 결과:", res));
+
+                // 근처 사용자 가져오기
+                fetch(`/user/nearby?lat=${lat.toFixed(7)}&lon=${lon.toFixed(7)}&radius=${radiusKm}`)
+                    .then(res => res.json())
+                    .then(users => {
+                        nearbyEl.innerHTML = "";
+                        for (var i = 0; i < users.length; i++) {
+                            var u = users[i];
+                            var li = document.createElement("li");
+                            li.innerText = `사용자: ${u.username}, 거리: ${u.distance.toFixed(3)} km, DB위치: (${u.latitude.toFixed(7)}, ${u.longitude.toFixed(7)})`;
+                            nearbyEl.appendChild(li);
+                        }
+                    });
+
+            }, function(err) {
+                statusEl.innerText = `위치 가져오기 실패: ${err.message}`;
+            }, {
+                enableHighAccuracy: true,  // GPS 사용 시 정확도 향상
+                timeout: 10000,
+                maximumAge: 0
+            });
+        });
+    </script>
+</body>
+</html>

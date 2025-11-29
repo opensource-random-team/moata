@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headerLayout">
-	<header class="border-b border-gray-200 bg-white bg-opacity-80 backdrop-blur-md sticky top-0 z-50">
-			  <!-- Changed layout to center navigation menu -->
-			  <div class="container mx-auto px-4 py-4 flex items-center justify-center relative">
-			  <a href="/" class="absolute left-4">
-			    <div class="flex items-center gap-2">
-			      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-			        <span class="text-white font-bold text-lg">M</span>
-			      </div>
-			      <span class="text-xl font-bold text-gray-900">Moata</span>
-			    </div>
-			   </a>
-			    <nav class="hidden md:flex items-center gap-6">
-			      <a href="/chat" class="text-gray-600 hover:text-gray-900 transition-colors">채팅</a>
-			      <a href="/matching" class="text-gray-600 hover:text-gray-900 transition-colors">매칭</a>
-			      <a href="/community" class="text-gray-600 hover:text-gray-900 transition-colors">커뮤니티</a>
-			      <a href="/profile" class="text-gray-600 hover:text-gray-900 transition-colors">프로필</a>
-			    </nav>
-			    <div class="flex items-center gap-3 absolute right-4">
-			    
-			    <!-- 로그인 O: 사용자 이름 표시 -->
-				   <span sec:authorize="isAuthenticated()" class="text-gray-700 font-semibold mr-2">
-				    <span style="color:#1E49EC;" sec:authentication="name"></span>님, 환영합니다!
-				   </span>
-    
-			      <a href="/login">
-					<form th:action="@{/login}" sec:authorize="isAnonymous()">
-					    <button type="submit"
-					        class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition">
-					        로그인
-					    </button>
-					</form>
-					<form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-					    <button type="submit"
-					        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition">
-					        로그아웃
-					    </button>
-					</form>
-			      </a>
-			      <a href="/signup">
-			      <form th:action="@{/signup}" sec:authorize="isAnonymous()">
-			        <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition">회원가입</button>
-			      </form>
-			      </a>
-			    </div>
-			  </div>
-			</header>  
+  <header class="border-b border-gray-200 bg-white sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- 로고 -->
+      <div class="flex-1">
+        <a href="/" class="flex items-center gap-2 w-fit">
+          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-lg">M</span>
+          </div>
+          <span class="text-xl font-bold text-gray-900">Moata</span>
+        </a>
+      </div>
+
+      <!-- PC 메뉴 (중앙 정렬) -->
+      <nav class="hidden md:flex flex-1 items-center justify-center gap-6">
+        <a href="/matching" class="text-gray-600 hover:text-gray-900 transition-colors">매칭</a>
+        <a href="/community" class="text-gray-600 hover:text-gray-900 transition-colors">커뮤니티</a>
+        <a href="/profile" class="text-gray-600 hover:text-gray-900 transition-colors">프로필</a>
+      </nav>
+
+      <!-- 모바일 메뉴 버튼 -->
+      <button id="mobileMenuButton" class="md:hidden px-3 py-2 border rounded text-gray-700">
+        메뉴
+      </button>
+
+      <!-- 로그인/회원가입 버튼 (오른쪽 정렬) -->
+      <div class="hidden md:flex flex-1 items-center justify-end gap-3">
+        <form th:action="@{/login}" sec:authorize="isAnonymous()">
+          <button class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition">로그인</button>
+        </form>
+        <form th:action="@{/signup}" sec:authorize="isAnonymous()">
+          <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition">회원가입</button>
+        </form>
+        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+          <span style="color:#1E49EC;" sec:authentication="name"></span>님, 환영합니다!
+        </form>
+        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+          <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition">로그아웃</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 모바일 메뉴 드롭다운 -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
+      <a href="/matching" class="block py-2 text-gray-700">매칭</a>
+      <a href="/community" class="block py-2 text-gray-700">커뮤니티</a>
+      <a href="/profile" class="block py-2 text-gray-700">프로필</a>
+
+      <!-- 로그인/회원가입 -->
+      <form th:action="@{/login}" sec:authorize="isAnonymous()" class="py-2">
+        <button class="w-full px-4 py-2 bg-blue-600 text-white rounded">로그인</button>
+      </form>
+      <form th:action="@{/signup}" sec:authorize="isAnonymous()" class="py-2">
+        <button class="w-full px-4 py-2 bg-blue-600 text-white rounded">회원가입</button>
+      </form>
+      <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="py-2">
+        <span style="color:#1E49EC;" sec:authentication="name"></span>님, 환영합니다!
+      </form>
+      <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="py-2">
+        <button class="w-full px-4 py-2 bg-blue-600 text-white rounded">로그아웃</button>
+      </form>
+    </div>
+  </header>
+
+  <script>
+  const menuBtn = document.getElementById('mobileMenuButton');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+  });
+  </script>
 </th:block>
 </html>
