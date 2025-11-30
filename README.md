@@ -64,8 +64,7 @@
 - 아래 항목들은 모두 GitHub Repository 내 /docs/ 폴더에 포함되어 있습니다.
 
 ### 📹 1. 프로젝트 시연 영상
-- 유튜브 URL: (추가 예정)
-- 시연 영상 파일: (파일 위치 추가 예정)
+- 유튜브 URL: https://www.youtube.com/watch?v=QFPe3392zic
 
 ### 📘 2. 중간 결과보고서
 - docs/2025오픈소스개발프로젝트중간결과보고서-12.hwp
