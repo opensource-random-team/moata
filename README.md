@@ -68,16 +68,17 @@
 - 시연 영상 파일: (파일 위치 추가 예정)
 
 ### 📘 2. 중간 결과보고서
-- (파일 위치 추가 예정)
+- docs/2025오픈소스개발프로젝트중간결과보고서-12.hwp
 
 ### 🗂️ 3. 프로젝트 관리에 활용된 도구
 - (파일 위치 추가 예정)
 
 ### 📄 4. 요구사항 정의서
-- (파일 위치 추가 예정)
+- docs/요구사항정의서-12.hwp
 
 ### 🖥️ 5. 프로젝트 UI & 시나리오
-- (파일 위치 추가 예정)
+- figma : https://www.figma.com/design/JaIi3AFmlKCR4N057cZc7S/Untitled?node-id=0-1&p=f&t=YRGY195DqvCvNGP5-0
+- flowchart : docs/flowchart.jpg
 
 ### 📑 6. 최종 발표용 PPT
 - (파일 위치 추가 예정)
