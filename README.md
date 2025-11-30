@@ -33,7 +33,7 @@
 ## 🧑‍💻 팀 구성
 
 | 이름 | 역할 | 주요 담당 | 개인 폴더 |
-|------|------|------------| --------------- |
+|------|------|------------| ------------ |
 | 문서연 | Backend | Spring Boot 서버 구축, 실시간 채팅 구현 | https://github.com/opensource-random-team/moonseoyeon
 | 윤은혜 | Frontend | UI 설계 및 지도 API 연동 | https://github.com/opensource-random-team/YunEunhye
 | 최희원 | Backend | DB 및 API 설계, 커뮤니티 기능 구현 | https://github.com/opensource-random-team/ChoiHeewon
