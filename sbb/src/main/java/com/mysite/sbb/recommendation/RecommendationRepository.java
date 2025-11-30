@@ -18,4 +18,6 @@ public interface RecommendationRepository extends JpaRepository<Recommendation, 
     List<Recommendation> findByUser(SiteUser user);
 
     boolean existsByUserAndPost(SiteUser user, Post post);
+    
+	void deleteByPost(Post post);
 }

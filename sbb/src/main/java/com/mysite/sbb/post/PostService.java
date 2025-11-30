@@ -10,14 +10,19 @@ import lombok.RequiredArgsConstructor;
 
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserRepository;
+import com.mysite.sbb.recommendation.RecommendationRepository;
+import com.mysite.sbb.comment.CommentRepository;
 
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class PostService 
+{
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final RecommendationRepository recommendationRepository;
+    private final CommentRepository commentRepository;
 
     public Post writePost(String title, String content, String category, String userId) 
     {
@@ -69,7 +74,9 @@ public class PostService {
         postRepository.save(post);
     }
     
-    public void deletePost(Integer id, String userId) {
+    @Transactional
+    public void deletePost(Integer id, String userId) 
+    {
 
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
@@ -78,6 +85,9 @@ public class PostService {
         if (!post.getUser().getUserId().equals(userId)) {
             throw new RuntimeException("삭제 권한이 없습니다.");
         }
+        
+        recommendationRepository.deleteByPost(post); //글에 있는 좋아요 삭제, 디비 옵션에 자동삭제 있는데 귀찮아서 안 씀
+        commentRepository.deleteByPost(post);
 
         postRepository.delete(post);
     }
@@ -89,7 +99,8 @@ public class PostService {
     }
 
     @Transactional
-    public void deleteUserByUsername(String username) {
+    public void deleteUserByUsername(String username) 
+    {
     	Optional<SiteUser> userOpt = userRepository.findByUserId(username);
 
     	if (userOpt.isPresent()) {
